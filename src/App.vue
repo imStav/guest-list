@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import GuestCard from "./components/GuestCard.vue";
 
 enum GENDER {
@@ -30,6 +30,28 @@ const addGuest = (): void => {
   name.value = "";
   gender.value = GENDER.MALE;
 };
+
+const count = computed<{
+  male: number;
+  female: number;
+}>(() => {
+  return guestList.value.reduce(
+    (countObject, guest) => {
+      if (guest.gender === GENDER.MALE) {
+        return {
+          ...countObject,
+          male: countObject.male + 1,
+        };
+      }
+
+      return {
+        ...countObject,
+        female: countObject.female + 1,
+      };
+    },
+    { male: 0, female: 0 }
+  );
+});
 </script>
 
 <template>
@@ -43,6 +65,11 @@ const addGuest = (): void => {
       </select>
 
       <button @click="addGuest">Add guest</button>
+    </div>
+
+    <div class="guest_gender_counter">
+      <p class="guest_gender_male">{{ count.male }}</p>
+      <p class="guest_gender_female">{{ count.female }}</p>
     </div>
 
     <GuestCard v-for="guest in guestList" :key="guest.id" :guest="guest" />
@@ -87,5 +114,18 @@ button {
   flex-direction: column;
   margin-block: 2rem;
   width: 50%;
+}
+
+.guest_gender_counter {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.guest_gender_counter p {
+  margin-inline: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 1000px;
+  color: black;
+  font-weight: bold;
 }
 </style>

@@ -43,11 +43,11 @@ defineProps<{
   border-radius: 1000px;
 }
 
-.guest_gender_male {
+:global(.guest_gender_male) {
   background-color: deepskyblue;
 }
 
-.guest_gender_female {
+:global(.guest_gender_female) {
   background-color: violet;
 }
 </style>
