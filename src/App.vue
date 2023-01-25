@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import GuestCard from "./components/GuestCard.vue";
 
 enum GENDER {
   MALE = "Boy",
@@ -33,33 +34,18 @@ const addGuest = (): void => {
 
 <template>
   <main>
-    <div>
-      <h1>Guests</h1>
+    <div class="guest_form">
+      <input type="text" placeholder="Name" v-model.trim="name" />
+
+      <select v-model="gender">
+        <option :value="GENDER.MALE">{{ GENDER.MALE }}</option>
+        <option :value="GENDER.FEMALE">{{ GENDER.FEMALE }}</option>
+      </select>
+
+      <button @click="addGuest">Add guest</button>
     </div>
 
-    <input type="text" placeholder="Name" v-model.trim="name" />
-
-    <select v-model="gender">
-      <option :value="GENDER.MALE">{{ GENDER.MALE }}</option>
-      <option :value="GENDER.FEMALE">{{ GENDER.FEMALE }}</option>
-    </select>
-
-    <button @click="addGuest">Add guest</button>
-
-    <div v-for="guest in guestList" :key="guest.id">
-      <div class="guest_description">
-        <p class="guest_name">{{ guest.name }}</p>
-        <p
-          :class="
-            guest.gender === GENDER.MALE
-              ? 'guest_gender_male'
-              : 'guest_gender_female'
-          "
-        >
-          {{ guest.gender }}
-        </p>
-      </div>
-    </div>
+    <GuestCard v-for="guest in guestList" :key="guest.id" :guest="guest" />
   </main>
 </template>
 
@@ -76,8 +62,8 @@ select {
   background-color: transparent;
   color: currentColor;
   border: 1px solid currentColor;
+  border-radius: 4px;
   padding: 0.5rem;
-  width: 50%;
 }
 
 input {
@@ -85,30 +71,21 @@ input {
 }
 
 select {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 button {
-  width: 50%;
   border: none;
   padding-block: 0.5rem;
   background-color: #833ded;
   color: whitesmoke;
+  border-radius: 4px;
 }
 
-.guest_description {
+.guest_form {
   display: flex;
-}
-
-.guest_description p:nth-child(2) {
-  margin-left: 1rem;
-}
-
-.guest_gender_male {
-  color: deepskyblue;
-}
-
-.guest_gender_female {
-  color: violet;
+  flex-direction: column;
+  margin-block: 2rem;
+  width: 50%;
 }
 </style>
