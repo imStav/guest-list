@@ -1,20 +1,10 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
+import { GENDER, type Guest } from "../src/types/types";
 import GuestCard from "./components/GuestCard.vue";
-
-enum GENDER {
-  MALE = "Boy",
-  FEMALE = "Girl",
-}
 
 const name = ref("");
 const gender = ref(GENDER.MALE);
-
-interface Guest {
-  id: number;
-  name: string;
-  gender: GENDER;
-}
 
 const guestList = ref<Guest[]>([]);
 

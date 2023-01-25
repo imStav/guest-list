@@ -1,8 +1,5 @@
 <script setup lang="ts">
-enum GENDER {
-  MALE = "Boy",
-  FEMALE = "Girl",
-}
+import { GENDER } from "../types/types";
 
 defineProps<{
   guest: {
